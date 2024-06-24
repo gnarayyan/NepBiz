@@ -1,0 +1,14 @@
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  text-align: center;
+  color: gray;
+  cursor: pointer;
+}
+
+.rating span {
+  display: inline-block;
+  position: relative;
+  /* width: 1.1em; */
+  font-size: 1.3rem;
+}

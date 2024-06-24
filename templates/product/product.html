@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block css %}
+<link rel="stylesheet" href={% static 'product/product.css' %}>
+<link rel="stylesheet" href={% static 'product/review_list.css' %}>
+<link rel="stylesheet" href={% static 'product/review_form.css' %}>
+<link rel="stylesheet" href={% static 'product/rating.css' %}>
+<link rel="stylesheet" href={% static 'menu/product-card.css' %}>
+{% endblock %}
+
+
+{% block content %}
+
+
+<div id="product">
+    <div class="product-container">
+        <div class="product-image">
+            <img id="product-image" src={{ product.image.url }} alt="Product Image">
+        </div>
+        <div class="thumbnail-images" id="thumbnail-images">
+            <img src={{ product.image.url }} alt="Thumbnail 1" onclick=changeImage("{{ product.image.url }}")>
+
+            {% if product.image2 %}
+            <img src={{ product.image2.url }} alt="Thumbnail 2" onclick=changeImage("{{ product.image2.url }}")>
+            {% endif %}
+            {% if product.image3 %}
+            <img src={{ product.image3.url }} alt="Thumbnail 3" onclick=changeImage("{{ product.image3.url }}")>
+            {% endif %}
+        </div>
+    </div>
+    <div class="product-details">
+        <h1 class="product-title">{{ product.name }}</h1>
+        <p class="product-price">Rs {{ product.price|floatformat:"2g" }}</p>
+        <ul class="product-description">
+            {% for item in description %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+
+        {% if user.is_authenticated %}
+        <button class="product-add-to-cart-btn"><a href="/add_to_cart/{{product.id}}">Add to Cart</a></button>
+        {% endif %}
+
+    </div>
+</div>
+
+<div class="review-and-recommendation">
+
+    <div class="review-container">
+        <h2>Review of the Product</h2>
+        <br><br>
+        {% if can_review %}
+        <form id="reviewSubmitForm">
+            <textarea id="reviewText" placeholder="Write your review here..." required="" rows="5"></textarea><br>
+            <div class="rating-section">
+                <p for="rating">Rating &nbsp; </p>
+                <div class="rating" id="ratingStars">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+            <input type="hidden" id="rating" name="rating" required="">
+            <input type="hidden" id="productId" name="productId" required="" value="{{product.id}}">
+
+            <br> <br>
+            <button type="submit" id="submitBtn">Submit Review</button>
+        </form>
+        {% endif %}
+
+
+        <div id="reviewsSection">
+            <!-- <h2>Customer Reviews</h2> -->
+            {% for review in reviews %}
+            <div class="review">
+                <div class="reviewer-and-date">
+                    <h3 class="reviewer-name">{{review.user.username}}</h3>
+                    <p class="review-date">&nbsp; &nbsp; &nbsp; {{review.added_on|timesince}}</p>
+                </div>
+                <div class="rating">
+                    {{ review.get_rating|safe }}
+                </div>
+                <p class="review-text">{{ review.review }}</p>
+            </div>
+            {% endfor %}
+            <!-- More reviews can be added here -->
+            <!-- <div class="review">
+                <div class="reviewer-and-date">
+                    <h3 class="reviewer-name">John Doe</h3>
+                    <p class="review-date">&nbsp; &nbsp; &nbsp; 2024-05-09</p>
+                </div>
+                <div class="rating">
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </div>
+                <p class="review-text">This product is amazing! I highly recommend it.</p>
+            </div> -->
+        </div>
+    </div>
+    <div class="recommendation-container">
+        <h2>Recommended Products</h2>
+        <br><br>
+        {% for product in related_products %}
+        <div class="recommended-products">
+            <div class="product">
+                <a href="/product/{{product.id}}"><img src="{{ product.image.url }}" alt="{{ product.name }}" /></a>
+                <h3>{{product.name}}</h3>
+                {% if product.discount > 0 %}
+                <div class="price-section">
+                    <div class="price">
+                        <p class="original-price">Rs {{product.price|floatformat:"2g"}}</p>
+                        <p class="discounted-price">Rs
+                            {{ product.discountedPrice|floatformat:"2g"}}</p>
+                    </div>
+                    <p class="discount-percent"> {{product.discount|floatformat:"-3"}}% OFF</p>
+                </div>
+                {% else %}
+                <div class="price-section">
+                    <div class="price">
+                        <p>Rs {{product.price|floatformat:"2g"}}</p>
+                        <p class="hidden">Hidden</p>
+                    </div>
+                </div>
+                {% endif %}
+                <button class="btn">Add to Cart</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script src={% static 'product/product.js' %}></script>
+<script src={% static 'product/submitReview.js' %}></script>
+
+{% endblock %}

@@ -1,0 +1,122 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.filters {
+  flex: 1;
+  padding: 20px;
+}
+
+.filters h2 {
+  color: #333;
+  margin-bottom: 1.3rem;
+}
+
+.filter-option {
+  margin-bottom: 20px;
+}
+
+.filter-option h3 {
+  color: #555;
+  margin-bottom: 5px;
+}
+
+/* --------- */
+
+.product-grid {
+  flex: 3;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Slider for price range */
+.slider {
+  width: 100%;
+}
+
+/* Style for checkbox inputs */
+input[type='checkbox'] {
+  margin-right: 5px;
+}
+
+/* Highlight active filter option */
+.filter-active {
+  font-weight: bold;
+}
+input[type='range'] {
+  accent-color: rgb(245, 10, 10);
+}
+
+/* Colorful styling */
+.slider {
+  background-color: #ddd;
+}
+
+.slider::-webkit-slider-thumb {
+  background-color: rgb(245, 10, 10);
+}
+
+.filter-option h3,
+.filter-option label {
+  color: #333;
+}
+.price-range-container {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.price-range-container input {
+  padding: 0.7rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 4rem;
+}
+
+.price-range-container button {
+  padding: 0.7rem 1.3rem;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(220, 10, 10);
+  color: white;
+  cursor: pointer;
+}
+
+.price-range-container button:hover {
+  background-color: rgb(255, 10, 10);
+}
+
+/* .filter-option select {
+  background-color: #eee;
+  border: 1px solid #ddd;
+}
+
+.filter-option select:hover {
+  border-color: rgb(245, 10, 10);
+} */
+
+.product-grid {
+  flex: 3;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  justify-content: space-between;
+}
+
+.jumbotron {
+  flex: 3;
+}

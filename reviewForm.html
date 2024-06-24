@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        /* CSS */
+        #reviewSubmitForm {
+            width: 60%;
+            margin: auto;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #reviewSubmitForm input[type="text"],
+        #reviewSubmitForm input[type="date"],
+        #reviewSubmitForm textarea {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        #reviewSubmitForm button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #reviewSubmitForm button:hover {
+            background-color: #45a049;
+        }
+
+        .star {
+            font-size: 24px;
+            color: gray;
+            cursor: pointer;
+        }
+
+        .star[data-value="1"]:hover,
+        .star[data-value="1"]~.star {
+            color: orange;
+        }
+
+        .star[data-value="2"]:hover,
+        .star[data-value="2"]~.star {
+            color: orange;
+        }
+
+        .star[data-value="3"]:hover,
+        .star[data-value="3"]~.star {
+            color: orange;
+        }
+
+        .star[data-value="4"]:hover,
+        .star[data-value="4"]~.star {
+            color: orange;
+        }
+
+        .star[data-value="5"]:hover,
+        .star[data-value="5"]~.star {
+            color: orange;
+        }
+    </style>
+    <!-- HTML -->
+    <form id="reviewSubmitForm">
+        <input type="text" id="fullName" placeholder="Full Name" required=""><br>
+        <input type="date" id="reviewDate" required=""><br>
+        <textarea id="reviewText" placeholder="Write your review here..." required=""></textarea><br>
+        <label for="rating">Rating:</label>
+        <div class="rating" id="ratingStars">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+        </div>
+        <input type="hidden" id="rating" name="rating" required="">
+        <br>
+        <button type="submit" id="submitBtn">Submit Review</button>
+    </form>
+    <!-- 
+
+ -->
+    <!-- HTML -->
+    <div id="reviewsSection">
+        <h2>Customer Reviews</h2>
+        <div class="review">
+            <h3 class="reviewer-name">John Doe</h3>
+            <p class="review-date">Date: 2024-05-09</p>
+            <div class="rating">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <p class="review-text">This product is amazing! I highly recommend it.</p>
+        </div>
+        <!-- More reviews can be added here -->
+    </div>
+
+    <!--  -->
+
+    <style>
+        /* CSS */
+        #reviewsSection {
+            width: 60%;
+            margin: auto;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .review {
+            border-bottom: 1px solid #ddd;
+            padding: 20px;
+        }
+
+        .reviewer-name {
+            color: #333;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .review-date {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .review-text {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .rating {
+            margin-top: 10px;
+        }
+
+        .fa-star {
+            font-size: 24px;
+            color: gray;
+        }
+
+        .checked {
+            color: orange;
+        }
+    </style>
+</body>
+
+</html>

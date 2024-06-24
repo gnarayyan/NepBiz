@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Reviews</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Product Reviews</h1>
+        <div id="reviews"></div>
+        <button id="showFormBtn">Write a Review</button>
+        <div id="reviewForm" style="display:none;">
+            <h2>Write a Review</h2>
+            <form id="reviewSubmitForm">
+                <input type="text" id="fullName" placeholder="Full Name" required><br>
+                <input type="date" id="reviewDate" required><br>
+                <textarea id="reviewText" placeholder="Write your review here..." required></textarea><br>
+                <label for="rating">Rating:</label>
+                <div class="rating" id="ratingStars">
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                </div>
+                <input type="hidden" id="rating" name="rating" required>
+                <br>
+                <button type="submit">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

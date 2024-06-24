@@ -1,0 +1,15 @@
+.search-fallback-text-container {
+  position: relative;
+  width: 100%;
+  height: 70vh; /* Set container height to viewport height */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+}
+
+.search-fallback-text {
+  text-align: center; /* Center text horizontally */
+  font-weight: bold;
+  color: red;
+  font-size: 1.4rem;
+}

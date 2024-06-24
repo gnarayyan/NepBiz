@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load mathfilters %}
+
+{% block css %}
+<link rel="stylesheet" href={% static 'menu/menu.css' %}>
+<link rel="stylesheet" href={% static 'menu/product-card.css' %}>
+<link rel="stylesheet" href={% static 'menu/pagination.css' %}>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="filters">
+    <h2>Filters</h2>
+    <div class="filter-option">
+      <h3>Price Range</h3>
+      <div class="price-range-container">
+        <input type="number" id="minField" placeholder="Min">
+        <input type="number" id="maxField" placeholder="Max">
+        <button id="priceRangeSelector">Apply</button>
+      </div>
+      <!-- <input type="range" min="0" max="100000" value="1000" class="slider" id="priceRange" />
+      <span id="priceOutput">Rs 1000</span> -->
+    </div>
+    <div class="filter-option">
+      <h3>Category</h3>
+      <select id="categorySelect">
+        <option value="-1">All</option>
+        {% for category in categories %}
+        <option value="{{category.id}}">{{category.name}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="filter-option">
+      <h3>Brand</h3>
+      {% for brand in brands %}
+      <input type="checkbox" id="brand{{brand.id}}" name="brand" value="{{brand.id}}" />
+      <label for="brand{{brand.id}}">{{brand.name}}</label><br />
+      {% endfor %}
+    </div>
+    <div class="filter-option">
+      <h3>Gender</h3>
+      <input type="checkbox" id="both" name="gender" value="2" />
+      <label for="both">Both</label><br />
+      <input type="checkbox" id="mens" name="gender" value="0" />
+      <label for="mens">Men's</label><br />
+      <input type="checkbox" id="womens" name="gender" value="1" />
+      <label for="womens">Women's</label>
+    </div>
+  </div>
+  <div class="jumbotron">
+    <div class="product-grid">
+      <!-- Product items will be displayed here -->
+      {% for product in page_obj %}
+      <div class="product">
+        {% if product.image.url %}
+        <a href="/product/{{product.id}}"><img src="{{ product.image.url }}" alt="{{ product.name }}" /></a>
+        {% else %}
+        <img src="/media/fallback.jpg" alt="{{ product.name }}" />
+        {% endif %}
+        <h3>{{product.name}}</h3>
+        {% if product.discount > 0 %}
+        <div class="price-section">
+          <div class="price">
+            <p class="original-price">Rs {{product.price|floatformat:"2g"}}</p>
+            <p class="discounted-price">Rs
+              {{ product.discountedPrice|floatformat:"2g"}}</p>
+          </div>
+          <p class="discount-percent"> {{product.discount|floatformat:"-3"}}% OFF</p>
+        </div>
+        {% else %}
+        <div class="price-section">
+          <div class="price">
+            <p>Rs {{product.price|floatformat:"2g"}}</p>
+            <p class="hidden">Hidden</p>
+          </div>
+        </div>
+        {% endif %}
+        <button class="btn"><a href="/add_to_cart/{{product.id}}">Add to Cart</a></button>
+      </div>
+      {% endfor %}
+
+    </div>
+    <!-- pagination -->
+    <div class="pagination" id="pagination">
+      {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}" class="previous">Previous</a>
+      {% endif %}
+      <span class="current">{{ page_obj.number }}</span>
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}" class="next">Next</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script src={% static 'menu/priceController.js' %}></script>
+
+{% endblock %}

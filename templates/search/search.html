@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block css %}
+<link rel="stylesheet" href={% static 'home.css' %}>
+<link rel="stylesheet" href={% static 'grid-items.css' %}>
+<link rel="stylesheet" href={% static 'search/search.css' %}>
+
+{% endblock %}
+
+
+{% block content %}
+
+{% if food_items %}
+<h2 class="section">{{query}}...</h2>
+<div id="foods">
+  {% for food_item in food_items %}
+  <div class="food">
+    <a href="/product/{{food_item.id}}"><img src="{{ food_item.image.url }}" alt="Image" /></a>
+    <p class="food-name">{{food_item.name}}</p>
+    <p class="food-price">Rs {{food_item.price}}</p>
+
+    {% if user.is_authenticated %}
+    <button type="submit" class="add-to-cart" id="{{food_item.id}}">
+      <a href="add_to_cart/{{food_item.id}}/">ADD TO CART</a>
+    </button>
+    {% endif %}
+
+
+  </div>
+  {% endfor %}
+</div>
+<hr style="margin: 2rem 0; height: 2px; background-color: grey" />
+<script src="{% static 'cart.js' %}"></script>
+
+<!-- Include the checkout.js script -->
+<!-- <script src="{% static 'checkout.js' %}"></script> -->
+
+{% else %}
+<div class="search-fallback-text-container">
+  <p class="search-fallback-text">Enter product name to search</p>
+</div>
+{% endif %}
+{% endblock %}

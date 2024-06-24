@@ -1,0 +1,34 @@
+#search-container {
+  position: relative;
+  width: 300px;
+  margin: 20px auto;
+}
+
+#search-container input[type='text'] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+#search-container button[type='submit'] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 100%;
+  background-color: rgb(245, 10, 10);
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  color: white;
+}
+
+#search-container button[type='submit']:hover {
+  background-color: rgb(255, 10, 10);
+}
+
+.fa-search {
+  font-size: 18px;
+}

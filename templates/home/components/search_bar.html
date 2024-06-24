@@ -1,0 +1,11 @@
+{% load static %}
+
+
+<link rel="stylesheet" href={% static 'home/components/search/search.css' %}>
+
+<div id="search-container">
+    <form method="GET" action="{% url 'search' %}">
+        <input type="text" name="q" placeholder="Search..." />
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+</div>
