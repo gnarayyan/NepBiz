@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block css %}
+
+
+<!-- External CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.css">
+<link rel="stylesheet" href="{% static 'cart.css' %}">
+<!-- Custom CSS -->
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 20px;
+        display: flex;
+    }
+
+    .card {
+        margin-bottom: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 15px;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .card-body p {
+        margin-bottom: 5px;
+    }
+
+    .card-body .item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .card-body .item img {
+        max-width: 100px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .card-body .item .item-details {
+        flex: 1;
+    }
+
+    .card-body .item .item-details .item-name {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .card-body .item .item-details .item-actions {
+        display: flex;
+        align-items: center;
+    }
+
+    .card-body .item .item-details .item-actions button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+        margin-right: 5px;
+        border-radius: 3px;
+    }
+
+    .card-body .item .item-details .item-actions button:hover {
+        background-color: #0056b3;
+    }
+
+
+
+    .summary {
+        margin-left: 2rem;
+        background-color: #ffffff;
+        padding: 15px;
+
+    }
+
+    .summary .total {
+        font-weight: bold;
+    }
+
+    .summary .checkout-btn {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .summary .checkout-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+
+
+<div class="container">
+
+    <section class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Cart - <span id="item-count">{{ cart_items|length }}</span> items</h5>
+        </div>
+        <div class="card-body">
+            {% for item in cart_items %}
+            <div class="item">
+                <div class="row " style="align-items: center;justify-content: space-between;">
+                    <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-fluid">
+                    </div>
+                    <div class="col-lg-5 col-md-6 mb-4 mb-lg-0 item-details">
+                        <p class="item-name"><strong>{{ item.product.name }}</strong></p>
+                        <div class="item-actions">
+                            <button class="btn btn-primary btn-sm remove">
+                                <a href="/cart/delete/{{ item.id }}" style="color: white;"><i
+                                        class="fas fa-trash"></i></a>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 item-details">
+                        <div class="d-flex mb-4">
+                            <button class="btn btn-primary px-3 remove">
+                                <a href="/cart/dec/{{ item.id }}" style="color: white;"><i class="fas fa-minus"></i></a>
+                            </button>
+                            <input type="number" min="0" name="quantity" value="{{ item.qunatity }}"
+                                class="form-control quantity"
+                                style="text-align: center;border: 1px solid grey;    height: min-content;align-items: flex-end;margin-top: auto;">
+                            <button class="btn btn-primary px-3 add">
+                                <a href="/cart/inc/{{ item.id }}" style="color: white;"><i class="fas fa-plus"></i></a>
+                            </button>
+                        </div>
+                        <p class="text-start text-md-center"><strong>Rs <span class="price">
+                                    {{ item.product.price|floatformat:"2g" }}</span></strong></p>
+                    </div>
+                </div>
+                <hr class="my-4">
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="card summary">
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                    Total Amount
+                    <span class="total">Rs {{ total_price|floatformat:"2g" }}</span>
+                </li>
+            </ul>
+            <button type="button" class="btn btn-primary btn-lg btn-block checkout-btn">
+                <a href="/checkout/" style="color: white;">Proceed to checkout</a>
+            </button>
+        </div>
+    </section>
+
+</div>
+
+<!-- External JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"></script>
+<!-- Custom JavaScript -->
+<script src="{% static 'checkout.js' %}"></script>
+<script src="{% static 'price-update.js' %}"></script>
+<script>
+    // Function to update the total amount
+    function updateTotal() {
+        let total = 0;
+        const prices = document.querySelectorAll('.price');
+        const quantities = document.querySelectorAll('.quantity');
+        for (let i = 0; i < prices.length; i++) {
+            const price = parseFloat(prices[i].textContent);
+            const quantity = parseInt(quantities[i].value);
+            total += price * quantity;
+        }
+        document.getElementById('total-price-of-products').textContent = total.toFixed(2);
+    }
+    // Call the updateTotal function whenever the quantity changes
+    const quantityInputs = document.querySelectorAll('.quantity');
+    for (const input of quantityInputs) {
+        input.addEventListener('input', updateTotal);
+    }
+</script>
+
+{% endblock %}

@@ -17,6 +17,7 @@ from home.models import FeatureProduct, Product
 from django.contrib.auth.models import User
 from .forms import CheckoutForm
 from django.views.decorators.csrf import csrf_exempt
+from utils.rating_based_recommendation import get_rating_based_recommendations
 
 
 # Create your views here.
@@ -78,6 +79,10 @@ def home(request):
     context = {
         'feature_products': feature_products
     }
+    # Recommendation
+    if request.user.is_authenticated:
+        context['recommended_products'] = get_rating_based_recommendations(
+            request.user)
 
     if request.user.is_authenticated:
         user_id = request.user.id
@@ -133,7 +138,6 @@ def cart(request):
 
     #################
     qty = cart_items.count()
-    # print('QTY: ', qty, '   ', type(qty))
     context = {
         "cart_items": cart_items,
         'cart_quantity': qty,
@@ -146,8 +150,7 @@ def cart(request):
 
         qty = len(list(products))
         context['cart_quantity'] = str(qty)
-    ####################
-    return render(request, 'cart.html', context)
+    return render(request, 'cartupdated.html', context)
 
 
 def cart_delete(request, id):

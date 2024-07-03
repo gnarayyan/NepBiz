@@ -16,18 +16,18 @@
 {% endblock %} {% block content %}
 <hr />
 <div class="landing-page"></div>
-<h2 class="section">Featured Products</h2>
+<h2 class="section">Recommended Products</h2>
 <div id="foods">
-  {% for product_item in feature_products %}
+  {% for product_item in recommended_products %}
   <div class="food">
-    <a href="/product/{{product_item.product.id}}">
-      <img src="{{ product_item.product.image.url }}" alt="Image" /></a>
-    <p class="food-name">{{product_item.product.name}}</p>
-    <p class="food-price">Rs {{product_item.product.price}}</p>
+    <a href="/product/{{product_item.id}}">
+      <img src="{{ product_item.image.url }}" alt="Image" /></a>
+    <p class="food-name">{{product_item.name}}</p>
+    <p class="food-price">Rs {{product_item.price}}</p>
 
     {% if user.is_authenticated %}
-    <button type="submit" class="add-to-cart" id="{{product_item.product.id}}">
-      <a href="add_to_cart/{{product_item.product.id}}/">ADD TO CART</a>
+    <button type="submit" class="add-to-cart" id="{{product_item.id}}">
+      <a href="add_to_cart/{{product_item.id}}/">ADD TO CART</a>
     </button>
     {% endif %}
   </div>

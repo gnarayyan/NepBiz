@@ -13,7 +13,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 
-
 # Create your views here.
 # For Carasoul: https://swiperjs.com/get-started#use-swiper-from-cdn
 
@@ -23,7 +22,6 @@ def process_list(lst):
 
 
 def product(request, id):
-    print('Product Id: ', id)
     product = Product.objects.get(pk=int(id))
     description = product.description.split('\n')
     # Get related products from the same category
@@ -39,7 +37,7 @@ def product(request, id):
 
     }
 # :ReviewModel.objects.
-    if request.user.is_authenticated and not ReviewModel.objects.filter(user=request.user).exists():
+    if request.user.is_authenticated and not ReviewModel.objects.filter(user=request.user, product=product).exists():
         context['can_review'] = True
 
     return render(request, 'product/product.html', context)
